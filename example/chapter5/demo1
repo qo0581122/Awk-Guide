@@ -1,0 +1,12 @@
+#!/bin/sh
+
+
+#统计每门课程的数量
+awk '
+{
+for(i=2;i<=NF;i++) Number[$i]++
+}
+END {
+for(course in Number) printf("%s %d\n", course, Number[course]) 
+}
+' $*

@@ -1,0 +1,6 @@
+#!/bin/sh
+awk '
+{
+#输出行号和分栏数
+print NR, NF
+} ' week.rpt

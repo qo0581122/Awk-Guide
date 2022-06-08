@@ -1,0 +1,13 @@
+#!/bin/sh
+awk '
+BEGIN {
+#分栏分割设置为\n
+#行分割设置为空，默认合并多个\n后再分割为行
+FS = "\n"
+RS = ""
+split("一. 二. 三. 四. 五. 六. 七. 八. 九.", C_Number, " ")
+}
+{
+printf("\n%s 报告人 : %s \n", C_Number[NR], $1)
+for(i = 2; i <= NF; i++) printf(" %d. %s\n", i - 1, $i)
+} ' week.rpt 

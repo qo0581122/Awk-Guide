@@ -1,0 +1,29 @@
+#!/bin/sh
+awk  '
+BEGIN {
+#按正则去分割分栏
+FS = "[ \t:]+"
+#获取当前时间
+"date" | getline
+#把当前时间输出到文件
+print $0 > "today_rpt3"
+print "Today is ", $2, $3 > "today_rpt3"
+print "=======================" > "today_rpt3"
+print "ID Number Arrival Time" > "today_rpt3"
+close("today_rpt3")
+}
+{
+#自定义函数HM_to_M
+arrival = HM_to_M($2, $3)
+#支持三目运算符
+printf("%s %s:%s %s\n", $1, $2, $3, arrival > 480 ? "*" : "") | "sort -k 1 >> today_rpt3"
+total += arrival
+}
+END {
+close("today_rpt3")
+printf("Average arrival time: %d:%d\n", total/NR/60, (total/NR) % 60) >> "today_rpt3"
+}
+function HM_to_M (hour, min) {
+return hour*60 + min
+}
+' arr.dat

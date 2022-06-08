@@ -1,0 +1,8 @@
+#!/bin/sh
+
+awk '
+BEGIN{
+getline < "date.dat"
+print $0
+}
+' $*  

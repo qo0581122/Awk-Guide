@@ -1,0 +1,8 @@
+#!/bin/sh
+
+awk '
+BEGIN{
+"date" | getline
+print $0 > "date2.dat"
+}
+' $*  

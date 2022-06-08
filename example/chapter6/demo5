@@ -1,0 +1,15 @@
+#!/bin/sh
+
+awk '
+BEGIN{
+file = "data5.rpt"
+print "begin" > file
+close(file)
+}
+{
+print "middle" >> file
+}
+END {
+print "end" >> file
+}
+' date.dat  

@@ -1,0 +1,10 @@
+#!/bin/sh
+
+
+awk '
+#过滤出只含有Dan的行
+/Dan/ {
+print $0
+print $2, $3
+}
+' $*

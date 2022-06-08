@@ -1,0 +1,16 @@
+#!/bin/sh
+
+awk '
+BEGIN{
+#调用date 获取时间
+#getline把date获取到到时间赋值为$0
+"date" | getline
+print "Today is ", $2, $3 > "today_rpt2"
+print "===========" > "today_rpt2"
+print "ID Number Arrival Time" > "today_rpt2"
+print "===========" > "today_rpt2"
+close("today_rpt2")
+}
+#sort -k 1 把printf后到输出按第一列进行排列 并把结果追加到today_rpt2末尾
+{printf("%s %s\n", $1, $2) | "sort -k 1 >> today_rpt2"}
+' arr.dat

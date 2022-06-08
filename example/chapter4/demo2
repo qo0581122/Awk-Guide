@@ -1,0 +1,12 @@
+#!/bin/sh
+
+awk '
+BEGIN{
+#获取命令行输入的字符
+#打印获取到的参数数量
+print ARGC
+print ARGV[0]
+print ARGV[1]
+print ARGV[2]
+}
+' $* 

@@ -1,0 +1,49 @@
+#!/bin/sh
+
+awk '
+BEGIN {
+#定义变量
+Sys_Sort = "sort -k 1 >> today_rpt4"
+Result = "today_rpt4"
+#重新设置分栏分割符，支持正则表达式
+FS = "[ \t:]+"
+#获取当前时间
+"date" | getline
+#输出当前时间到文件
+print $0 > Result
+print "Today is ", $2, $3 > Result
+print "================" > Result
+print "ID Number Arrival Time" > Result
+close(Result)
+#获取文件内容
+late_file = $2"late.dat"
+late_file2 = $2"late2.dat"
+while( getline < late_file > 0) cnt[$1] = $2
+close( late_file)
+}
+{
+arrival = HM_to_M($2, $3)
+if (arrival > 480) {
+mark = "*"
+cnt[$1]++
+}else {
+mark = " "
+}
+message = cnt[$1] ? cnt[$1] " times" : ""
+printf("%s %d:%d %s %s\n", $1, $2, $3, mark, message) | Sys_Sort
+total += arrival
+}
+END {
+#关闭sort -k 1 >> today_rpt4， 可以把尚未输出的内容输出到文件中
+close(Sys_Sort)
+printf("Average arrival time : %d:%d\n", total/NR/60, (total/NR)%60) >> Result
+close(Result)
+for(any in cnt)
+print any, cnt[any] > late_file2
+close(late_file2)
+}
+#自定义函数
+function HM_to_M(hour, min) {
+return 60*hour+min
+}
+' arr.dat

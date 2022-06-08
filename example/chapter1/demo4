@@ -1,0 +1,7 @@
+#!/bin/sh
+
+awk '
+/Dan/ {
+ print $0, $2
+}
+' $*

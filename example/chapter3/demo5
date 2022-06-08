@@ -1,0 +1,11 @@
+#!/bin/sh
+awk '
+BEGIN {
+#行分割设置为空，默认合并多个\n后再分割为行
+RS = ""
+FS = "\n"
+}
+{
+print NR, NF
+print $0
+} ' week.rpt

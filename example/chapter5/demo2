@@ -1,0 +1,12 @@
+#!/bin/sh
+
+
+#统计学生学习课程的数量
+awk '
+{
+for(i=1;i<=NR;i++) Student[$1] = NF - 1
+}
+END {
+for(std in Student) printf("%s %d\n", std, Student[std])
+}
+' $*

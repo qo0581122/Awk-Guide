@@ -1,0 +1,13 @@
+#!/bin/sh
+
+awk '
+BEGIN{
+print "begin"
+}
+{
+print "middle"
+}
+END {
+print "end"
+}
+' date.dat  
